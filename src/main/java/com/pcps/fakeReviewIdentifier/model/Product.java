@@ -22,6 +22,8 @@ public class Product {
     private float price;
     @Column
     private String description;
+    @Column
+    private String image;
     @ManyToMany(mappedBy = "products")
     @ToString.Exclude
     private List<User> users;
