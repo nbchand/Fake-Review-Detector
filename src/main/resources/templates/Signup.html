@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/Style.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>E-commerce site</title>
+    <style>
+        .wrap{
+            height: 30em;
+            width: 30em;
+            padding: 3em;
+            border: 2px solid;
+            margin-top: 10%;
+        }
+        .msg{
+            width: 30em;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="mynav navbar navbar-expand-lg navbar-light" style="position: sticky; top:0; z-index: 2;">
+    <a class="navbar-brand" href="/">E-commerce Site</a>
+</nav>
+
+<div class="container wrap white">
+    <h2 class="container">Signup</h2><hr>
+    <form class="container" method="post" action="/signup">
+
+        <div class="container">
+            <label>Firstname: </label>
+            <input class="ml-3" type="text" placeholder="Firstname" name="firstname" maxlength="20" required>
+        </div><br>
+
+        <div class="container">
+            <label>Lastname: </label>
+            <input class="ml-3" type="text" placeholder="Lastname" name="lastname" maxlength="20" required>
+        </div><br>
+
+        <div class="container">
+            <label>Email: </label>
+            <input class="ml-5" type="email" placeholder="example@host.com" name="email" maxlength="50" required>
+        </div><br>
+
+        <div class="container">
+            <label>Password: </label>
+            <input class="ml-3" type="password" name="password" placeholder="8-20 characters" maxlength="20" required>
+        </div><br>
+        <div class="container">
+            <input class="btn btn-success" type="submit" value="SIGNUP">
+            <a href="/">Already have an account?</a>
+        </div>
+    </form>
+</div>
+<div class="msg container alert alert-danger text-center mt-3" th:if="${signupmessage}" th:text="${signupmessage}"></div>
+<footer class="myfooter page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3"><b>© 2021 Copyright:
+        <a href="https://mdbootstrap.com/"> username.com</a></b>
+    </div>
+</footer>
+</div>
+</body>
+</html>
