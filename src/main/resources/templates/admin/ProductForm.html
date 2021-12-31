@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{../css/Style2.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .wrap{
+            padding: 3em;
+            width: 25em;
+            margin-left: 40%;
+            margin-top: 5%;
+            margin-bottom: 10%;
+        }
+    </style>
+    <title>E-commerce site</title>
+</head>
+<body style="background-color: #ff9723;">
+<nav class="mynav navbar navbar-expand-lg navbar-light" style="position: sticky; top:0; z-index: 2;">
+    <a class="navbar-brand" href="/">E-commerce site</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin-page">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Reviews</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Users</a>
+            </li>
+        </ul>
+        <form class="form-inline ml-auto my-2 my-lg-0" action="/logout" method="GET">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="wrap white">
+    <h2>Product Information</h2><hr>
+    <form method="post" action="/create-product" enctype="multipart/form-data">
+        <label>Product Name:</label><br>
+        <input type="text" name="name" maxlength="50" required><br>
+        <label>Price:</label><br>
+        <input type="number" name="price" min="1" required><br>
+        <label>Category:</label><br>
+        <input type="text" name="category" maxlength="50" required><br>
+        <label>Description:</label><br>
+        <textarea name="description" rows="5" cols="40" required></textarea><br>
+        <label>Image:</label><br>
+        <input type="file" name="image"><br>
+        <input type="SUBMIT" class="btn btn-lg btn-success w-50 mt-3" value="OK">
+    </form>
+     <div class="container alert alert-danger mt-2 text-center" th:if="${productMessage}" th:text="${productMessage}"></div>
+</div>
+
+<footer class="myfooter page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3"><b>© 2021 Copyright:
+        <a href="#"> sherpabishal.com</a></b>
+    </div>
+</footer>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script th:src="@{../js/AdminProduct.js}"></script>
+</body>
+</html>

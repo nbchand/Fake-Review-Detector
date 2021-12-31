@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{../css/Style2.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>E-commerce site</title>
+</head>
+<body style="background-color: #ff9723;">
+<nav class="mynav navbar navbar-expand-lg navbar-light" style="position: sticky; top:0; z-index: 2;">
+    <a class="navbar-brand" href="/">E-commerce site</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin-page">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Reviews</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Users</a>
+            </li>
+        </ul>
+        <form class="form-inline ml-auto my-2 my-lg-0" action="/logout" method="GET">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="p-5 ">
+    <h2 class="text-center">All Products</h2><hr>
+    <div th:if="${msg}" th:text="${msg}" class="container alert alert-success text-center"></div>
+    <div th:if="${msg2}" th:text="${msg2}" class="container alert alert-danger text-center"></div>
+    <button type="button" class="btn btn-success btn-lg my-3 d-block" onclick="location.href='/admin/add-product';">Add Product</button>
+
+    <th:block th:unless="${products.isEmpty()}">
+
+        <div class="white">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">S.N</th>
+                    <th scope="col">Item Name</th>
+                    <th scope="col">Item Image</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Number of purchases</th>
+                    <th scope="col">Number of reviews</th>
+                    <th scope="col">Overall rating</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="product, iStat : ${products}">
+                    <th scope="row" th:text="${iStat.count}"></th>
+                    <td th:text="${product.name}"></td>
+                    <td><img th:src="@{${product.image}}" height="200em" width="200em" alt="no image"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="'Rs. '+${product.price}"></td>
+                    <td th:text="${product.description}"></td>
+                    <td th:text="${product.totalPurchases}"></td>
+                    <td th:text="${product.totalReviews}"></td>
+                    <td th:text="${product.ratings}+' out of 5'"></td>
+                    <td><a class="del" href="#">Remove</a> | <a href="#">Edit</a></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </th:block>
+
+    <div th:if="${products.isEmpty()}" class="container alert alert-info text-center">No products added</div>
+
+
+    <footer class="myfooter page-footer font-small indigo">
+        <div class="footer-copyright text-center py-3"><b>© 2021 Copyright:
+            <a href="#"> sherpabishal.com</a></b>
+        </div>
+    </footer>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script th:src="@{../js/AdminProduct.js}"></script>
+</body>
+</html>

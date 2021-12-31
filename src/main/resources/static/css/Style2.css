@@ -1,0 +1,13 @@
+.white{
+    background: white;
+}
+.mynav{
+    background-color: #96be25;
+}
+.myfooter{
+    background-color: #96be25;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}

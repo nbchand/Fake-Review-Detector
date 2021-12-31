@@ -19,13 +19,19 @@ public class Product {
     @Column
     private String name;
     @Column
-    private float price;
+    private int price;
     @Column
     private String description;
     @Column
     private String image;
     @Column
     private String category;
+    @Column
+    private int totalPurchases;
+    @Column
+    private float ratings;
+    @Column
+    private int totalReviews;
     @ManyToMany(mappedBy = "products")
     @ToString.Exclude
     private List<User> users;
