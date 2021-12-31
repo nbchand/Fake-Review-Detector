@@ -24,6 +24,8 @@ public class Product {
     private String description;
     @Column
     private String image;
+    @Column
+    private String category;
     @ManyToMany(mappedBy = "products")
     @ToString.Exclude
     private List<User> users;

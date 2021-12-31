@@ -19,6 +19,8 @@ public class Review {
     private String content;
     @Column
     private String ip;
+    @Column
+    private boolean type;
     @ManyToOne
     @JoinColumn(name="product_id", nullable=false)
     @ToString.Exclude
