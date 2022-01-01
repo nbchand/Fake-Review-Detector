@@ -28,4 +28,12 @@ public class PatternMatcher {
         return matcher.matches();
     }
 
+    public static boolean checkIpPattern(String ip){
+        final String IP_REGEX = "\\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\\.|$)){4}\\b";
+        //validates IP adderess in the format of x.x.x.x where x ranges from 0-255
+        final Pattern PATTERN = Pattern.compile(IP_REGEX);
+        Matcher matcher = PATTERN.matcher(ip);
+        return matcher.matches();
+    }
+
 }

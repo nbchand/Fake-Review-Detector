@@ -15,7 +15,15 @@ public class ReviewService {
     @Autowired
     private ReviewRepo reviewRepo;
 
+    public void saveReview(Review review){
+        reviewRepo.save(review);
+    }
+
     public Review getUserReviewOnProduct(Product product, User user){
         return reviewRepo.findReviewByProductAndUser(product,user);
+    }
+
+    public List<Review> getReviewByIp(String ip){
+        return reviewRepo.findReviewByIp(ip);
     }
 }

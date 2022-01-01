@@ -32,7 +32,7 @@
 <h1 class="text-center mt-5" th:text="${product.name}"></h1><hr>
 
 <div class="container">
-
+    <div class="msg alert alert-danger text-center">Content can't be empty</div>
     <div class="image-container">
         <img th:src="@{${product.image}}">
     </div><br>
@@ -64,10 +64,10 @@
         <div class="give-review">
             <label class="label">Give review:</label><br>
 
-            <form class="review-form" th:unless="${var1}OR${var2}">
+            <form class="review-form" th:id="'f'+${product.id}" th:unless="${var1}OR${var2}">
                 <label>Rate product out of 5</label>
                 <div class="give-rating">
-                    <select class="form-select" name="rating">
+                    <select class="form-select" id="rating">
                         <option selected value="5">5</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
@@ -77,7 +77,7 @@
                 </div><br>
                 <div class="give-review">
                     <label>Write your review</label><br>
-                    <textarea class="form-control" rows="5" maxlength="280"></textarea>
+                    <textarea id="content" class="form-control" rows="5" maxlength="280"></textarea>
                 </div><br>
                 <input class="btn btn-info" type="submit" value="Submit review">
             </form>
@@ -92,7 +92,7 @@
         <div class="review-section" th:unless="${product.reviews.isEmpty()}">
 
             <label class="label">Reviews:</label>
-            <th:block th:each="review, iStat : ${reviews}">
+            <th:block th:each="review, iStat : ${product.reviews}">
 
                 <div class="user" th:text="${iStat.count}+'. '+${review.user.firstname}+' '+${review.user.lastname}"></div>
                 <div class="review rating-label"><b>Rating: <span th:text="${review.rating}+' out of 5'"></span></b></div>
