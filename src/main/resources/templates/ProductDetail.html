@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/Style2.css}">
+    <link rel="stylesheet" th:href="@{/css/ProductDetail.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>E-commerce site</title>
+</head>
+<body style="background-color: #ff9723;">
+<nav class="mynav navbar navbar-expand-lg navbar-light" style="position: sticky; top:0; z-index: 2;">
+    <a class="navbar-brand" href="/">E-commerce site</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <form class="form-inline ml-auto my-2 my-lg-0" action="/logout" method="GET">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+    </div>
+
+</nav>
+
+<h1 class="text-center mt-5" th:text="${product.name}"></h1><hr>
+
+<div class="container">
+
+    <div class="image-container">
+        <img th:src="@{${product.image}}">
+    </div><br>
+
+    <div class="product-info">
+
+        <div class="product-category">
+            <label class="label">Category:&nbsp;</label>
+            <label class="data" th:text="${product.category}"></label>
+        </div><hr>
+
+        <div class="product-price">
+            <label class="label">Price:&nbsp;</label>
+            <label class="data" th:text="'Rs. '+${product.price}"></label>
+        </div><hr>
+
+        <div class="product-description">
+            <label class="label">Description:&nbsp;</label>
+            <label class="data" th:text="${product.description}"></label>
+        </div><hr>
+
+        <div class="product-rating">
+            <label class="label">Average ratings:&nbsp;</label>
+            <label class="data" th:text="${product.ratings}+' out of 5'"></label>
+        </div><hr>
+
+        <button type="button" class="btn btn-success btn-lg my-3 d-block">Purchase</button><hr>
+
+        <div class="give-review">
+            <label class="label">Give review:</label><br>
+
+            <form class="review-form" th:unless="${var1}OR${var2}">
+                <label>Rate product out of 5</label>
+                <div class="give-rating">
+                    <select class="form-select" name="rating">
+                        <option selected value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </div><br>
+                <div class="give-review">
+                    <label>Write your review</label><br>
+                    <textarea class="form-control" rows="5" maxlength="280"></textarea>
+                </div><br>
+                <input class="btn btn-info" type="submit" value="Submit review">
+            </form>
+
+             <div class="alert alert-danger text-center" th:if="${var1}">Product not purchased</div>
+             <div class="alert alert-success text-center" th:if="${var2}">Review already given</div>
+
+
+
+        </div><hr>
+
+        <div class="review-section" th:unless="${product.reviews.isEmpty()}">
+
+            <label class="label">Reviews:</label>
+            <th:block th:each="review, iStat : ${reviews}">
+
+                <div class="user" th:text="${iStat.count}+'. '+${review.user.firstname}+' '+${review.user.lastname}"></div>
+                <div class="review rating-label"><b>Rating: <span th:text="${review.rating}+' out of 5'"></span></b></div>
+                <div class="review mb-3" th:text="${review.content}"></div>
+
+            </th:block>
+
+        </div>
+
+         <div class="alert alert-info text-center" th:if="${product.reviews.isEmpty()}">No reviews available</div>
+
+
+    </div>
+
+</div>
+
+
+<footer class="myfooter page-footer font-small indigo">
+    <div class="footer-copyright text-center py-3"><b>© 2021 Copyright:
+        <a href="#"> sherpabishal.com</a></b>
+    </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</body>
+</html>

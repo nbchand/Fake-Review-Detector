@@ -1,0 +1,22 @@
+img{
+    margin-left: 15%;
+    width: 50em;
+    height: 40em;
+}
+.product-info{
+    margin-left: 15%;
+    margin-bottom: 10em;
+}
+.label{
+    font-size: 2em;
+}
+.data{
+    font-size: 1.2em;
+}
+.user{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.review{
+    margin-left: 1.2em;
+}

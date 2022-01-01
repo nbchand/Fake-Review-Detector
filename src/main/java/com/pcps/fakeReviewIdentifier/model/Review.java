@@ -18,6 +18,8 @@ public class Review {
     @Column
     private String content;
     @Column
+    private int rating;
+    @Column
     private String ip;
     @Column
     private boolean type;
