@@ -15,7 +15,7 @@
 </head>
 <body style="background-color: #ff9723;">
 <nav class="mynav navbar navbar-expand-lg navbar-light" style="position: sticky; top:0; z-index: 2;">
-    <a class="navbar-brand" href="/">E-commerce site</a>
+    <a class="navbar-brand" href="/item-list">E-commerce site</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -59,7 +59,7 @@
             <label class="data" th:text="${product.ratings}+' out of 5'"></label>
         </div><hr>
 
-        <button type="button" class="btn btn-success btn-lg my-3 d-block">Purchase</button><hr>
+        <button type="button" th:id="${product.id}" class="purchaseBtn btn btn-success btn-lg my-3 d-block">Purchase</button><hr>
 
         <div class="give-review">
             <label class="label">Give review:</label><br>
@@ -117,5 +117,6 @@
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script th:src="@{/js/ProductDetail.js}"></script>
 </body>
 </html>
