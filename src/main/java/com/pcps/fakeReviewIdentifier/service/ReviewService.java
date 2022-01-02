@@ -45,4 +45,8 @@ public class ReviewService {
         product.setRatings(ReviewHelper.calculateAvgRating(product.getReviews()));
         productRepo.save(product);
     }
+
+    public void deleteMultipleReviews(List<Review> reviews){
+        reviewRepo.deleteAll(reviews);
+    }
 }

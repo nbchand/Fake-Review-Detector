@@ -3,10 +3,12 @@ package com.pcps.fakeReviewIdentifier.controller;
 import com.pcps.fakeReviewIdentifier.model.Product;
 import com.pcps.fakeReviewIdentifier.model.User;
 import com.pcps.fakeReviewIdentifier.service.ProductService;
+import com.pcps.fakeReviewIdentifier.service.ReviewService;
 import com.pcps.fakeReviewIdentifier.service.UserLoginService;
 import com.pcps.fakeReviewIdentifier.service.UserSignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +28,9 @@ public class ProductController {
     @Autowired
     private UserSignupService userSignupService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @PutMapping("/purchase-product/{id}")
     @ResponseBody
     public String purchaseProduct(@PathVariable int id, HttpSession session){
@@ -42,6 +47,23 @@ public class ProductController {
             userSignupService.saveUser(user);
         }
         productService.saveProduct(product);
+        return "success";
+    }
+
+    @DeleteMapping("/product/{id}")
+    @ResponseBody
+    public String deleteProduct(@PathVariable int id, HttpSession session){
+        if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("admin")){
+            return "redirect:/";
+        }
+        Product product = productService.getProductById(id);
+        reviewService.deleteMultipleReviews(product.getReviews());
+        try{
+            productService.deleteProduct(product);
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.getMessage();
+        }
         return "success";
     }
 }

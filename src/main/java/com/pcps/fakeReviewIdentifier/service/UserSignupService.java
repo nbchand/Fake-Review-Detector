@@ -5,6 +5,8 @@ import com.pcps.fakeReviewIdentifier.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserSignupService {
     @Autowired
@@ -16,5 +18,8 @@ public class UserSignupService {
 
     public void saveUser(User user){
         userRepo.save(user);
+    }
+    public void saveMultipleUsers(List<User> users){
+        userRepo.saveAll(users);
     }
 }

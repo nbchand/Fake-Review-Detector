@@ -73,7 +73,7 @@
                     <td th:text="${product.totalPurchases}"></td>
                     <td th:text="${product.totalReviews}"></td>
                     <td th:text="${product.ratings}+' out of 5'"></td>
-                    <td><a class="del" href="#">Remove</a> | <a href="#">Edit</a></td>
+                    <td><a class="hello" th:id="${product.id}" href="#">Remove</a> | <a th:href="'/edit-product/'+${product.id}">Edit</a></td>
                 </tr>
 
                 </tbody>
