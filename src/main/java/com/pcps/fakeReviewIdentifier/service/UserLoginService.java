@@ -5,6 +5,8 @@ import com.pcps.fakeReviewIdentifier.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserLoginService {
     @Autowired
@@ -15,5 +17,8 @@ public class UserLoginService {
     }
     public User getUserById(int id){
         return userRepo.getById(id);
+    }
+    public List<User> getAllUsers(){
+        return userRepo.findAll();
     }
 }

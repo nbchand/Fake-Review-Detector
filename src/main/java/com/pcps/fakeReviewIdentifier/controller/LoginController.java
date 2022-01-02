@@ -28,6 +28,10 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("loginmessage","Incorrect password");
             return "redirect:/";
         }
+        if(user.isStatus()){
+            redirectAttributes.addFlashAttribute("loginmessage","Account disabled. Contact customer care");
+            return "redirect:/";
+        }
 
         session.setAttribute("userId",user.getId());
         session.setAttribute("type","user");

@@ -46,6 +46,7 @@
             <tr>
                 <th scope="col">S.N</th>
                 <th scope="col">User</th>
+                <th scope="col">User Email</th>
                 <th scope="col">IP Address</th>
                 <th scope="col">Rating</th>
                 <th scope="col">Review</th>
@@ -59,6 +60,7 @@
             <tr th:each="review, iStat : ${reviews}">
                 <th scope="row" th:text="${iStat.count}+'.'"></th>
                 <td th:text="${review.user.firstname}+' '+${review.user.lastname}"></td>
+                <td th:text="${review.user.email}"></td>
                 <td th:text="${review.ip}"></td>
                 <td th:text="${review.rating}+' out of 5'"></td>
                 <td th:text="${review.content}"></td>
