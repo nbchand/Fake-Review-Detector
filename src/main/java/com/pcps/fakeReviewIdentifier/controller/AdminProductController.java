@@ -32,9 +32,6 @@ public class AdminProductController {
         if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("admin")){
             return "redirect:/";
         }
-        for(Product p: productService.getAllProducts()){
-            System.out.println(p.getImage());
-        }
         model.addAttribute("products",productService.getAllProducts());
         return "admin/AdminProduct";
     }

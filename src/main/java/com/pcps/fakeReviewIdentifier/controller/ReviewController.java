@@ -10,12 +10,10 @@ import com.pcps.fakeReviewIdentifier.service.ReviewService;
 import com.pcps.fakeReviewIdentifier.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.DecimalFormat;
 
 @Controller
 public class ReviewController {
@@ -53,19 +51,22 @@ public class ReviewController {
         review.setRating(reviewPojo.getRating());
 
         //ip comparison
-        if(!reviewService.getReviewByIp(reviewPojo.getIp()).isEmpty()){
+        if(!reviewService.getReviewByProductAndIp(product, reviewPojo.getIp()).isEmpty()){
             //in our app 'true' or 1 will represent fake
             //whereas 'false' and 0 will represent real
             review.setType(true);
         }
 
-
         review.setIp(reviewPojo.getIp());
         review.setUser(user);
 
-        product.setRatings(
-                ((product.getRatings()*(product.getTotalReviews()))+(float) reviewPojo.getRating())/(product.getTotalReviews()+1)
-        );
+        //for representing rating with single decimal value(e.g 4.5)
+        //calculate rating
+        float f = ((product.getRatings()*(product.getTotalReviews()))+(float) reviewPojo.getRating())/(product.getTotalReviews()+1);
+        DecimalFormat df = new DecimalFormat("#.#");
+        float rating = Float.valueOf(df.format(f));
+
+        product.setRatings(rating);
         product.setTotalReviews(product.getTotalReviews()+1);
         productService.saveProduct(product);
 
@@ -74,6 +75,16 @@ public class ReviewController {
         reviewService.saveReview(review);
 
 
+        return "success";
+    }
+
+    @DeleteMapping("/review/{id}")
+    @ResponseBody
+    public String deleteReview(@PathVariable int id, HttpSession session){
+        if(session.getAttribute("userId")==null){
+            return "redirect:/";
+        }
+        reviewService.deleteReview(reviewService.getReviewById(id));
         return "success";
     }
 }
