@@ -1,5 +1,6 @@
 package com.pcps.fakeReviewIdentifier.service;
 
+import com.pcps.fakeReviewIdentifier.functionality.ReviewHelper;
 import com.pcps.fakeReviewIdentifier.model.Product;
 import com.pcps.fakeReviewIdentifier.model.Review;
 import com.pcps.fakeReviewIdentifier.model.User;
@@ -8,7 +9,6 @@ import com.pcps.fakeReviewIdentifier.repository.ReviewRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Service
@@ -37,20 +37,12 @@ public class ReviewService {
     }
 
     public void deleteReview(Review review){
-        Product product = review.getProduct();
 
-        float f = ((product.getRatings()*product.getTotalReviews())-review.getRating())/(product.getTotalReviews()-1);
-        DecimalFormat df = new DecimalFormat("#.#");
-        float rating = Float.valueOf(df.format(f));
-
-        if(Float.isNaN(rating)){
-            rating=0.0f;
-        }
-
-        product.setRatings(rating);
-        product.setTotalReviews(product.getTotalReviews()-1);
-        productRepo.save(product);
-
+        int productId = review.getProduct().getId();
         reviewRepo.delete(review);
+        Product product = productRepo.getById(productId);
+        product.setTotalReviews(product.getTotalReviews()-1);
+        product.setRatings(ReviewHelper.calculateAvgRating(product.getReviews()));
+        productRepo.save(product);
     }
 }

@@ -1,6 +1,7 @@
 package com.pcps.fakeReviewIdentifier.controller;
 
 import com.pcps.fakeReviewIdentifier.functionality.PatternMatcher;
+import com.pcps.fakeReviewIdentifier.functionality.ReviewHelper;
 import com.pcps.fakeReviewIdentifier.model.Product;
 import com.pcps.fakeReviewIdentifier.model.Review;
 import com.pcps.fakeReviewIdentifier.model.User;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.text.DecimalFormat;
 
 @Controller
 public class ReviewController {
@@ -60,21 +60,12 @@ public class ReviewController {
         review.setIp(reviewPojo.getIp());
         review.setUser(user);
 
-        //for representing rating with single decimal value(e.g 4.5)
-        //calculate rating
-        float f = ((product.getRatings()*(product.getTotalReviews()))+(float) reviewPojo.getRating())/(product.getTotalReviews()+1);
-        DecimalFormat df = new DecimalFormat("#.#");
-        float rating = Float.valueOf(df.format(f));
-
-        product.setRatings(rating);
-        product.setTotalReviews(product.getTotalReviews()+1);
-        productService.saveProduct(product);
-
         review.setProduct(product);
-
         reviewService.saveReview(review);
-
-
+        Product product1 = productService.getProductById(id);
+        product1.setTotalReviews(product1.getTotalReviews()+1);
+        product1.setRatings(ReviewHelper.calculateAvgRating(product1.getReviews()));
+        productService.saveProduct(product1);
         return "success";
     }
 
