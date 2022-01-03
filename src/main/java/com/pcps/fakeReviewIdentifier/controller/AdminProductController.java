@@ -8,10 +8,7 @@ import com.pcps.fakeReviewIdentifier.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,7 +47,6 @@ public class AdminProductController {
             return "redirect:/";
         }
 
-
         Product product = new Product();
 
         if(productPojo.getName().equals("")){
@@ -84,5 +80,14 @@ public class AdminProductController {
 
         redirectAttributes.addFlashAttribute("msg","Product added successfully");
         return "redirect:/admin-page";
+    }
+
+    @GetMapping("/edit-product/{id}")
+    public String showEditForm(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("admin")){
+            return "redirect:/";
+        }
+        model.addAttribute("product",productService.getProductById(id));
+        return "admin/EditProduct";
     }
 }

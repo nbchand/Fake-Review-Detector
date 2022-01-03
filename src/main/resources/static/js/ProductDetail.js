@@ -23,6 +23,7 @@ $('.review-form').on('submit',async function (event){
     const content = document.getElementById('content').value
     const rating = document.getElementById('rating').value
 
+    //extract ip address of user
     let ip = await fetch('https://api.ipify.org/')
         .then(promise=>promise.text())
         .then(data=>{
@@ -42,6 +43,9 @@ $('.review-form').on('submit',async function (event){
         .then(data => {
             if(data=="success"){
                 location.href = "/display-product/"+id;
+            }
+            else if(data=="denied"){
+                location.href = "/";
             }
             else{
                 $('.msg').html(data);

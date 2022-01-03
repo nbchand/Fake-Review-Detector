@@ -31,7 +31,7 @@ public class ReviewController {
     @ResponseBody
     public String createReview(@PathVariable int id, @RequestBody ReviewPojo reviewPojo, HttpSession session){
         if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("user")){
-            return "redirect:/";
+            return "denied";
         }
         if(reviewPojo.getContent().equals("")){
             return "Review can't be empty";

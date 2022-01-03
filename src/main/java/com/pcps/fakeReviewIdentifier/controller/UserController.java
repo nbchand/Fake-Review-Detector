@@ -35,7 +35,7 @@ public class UserController {
     @ResponseBody
     public String changeStatus(@PathVariable int id, HttpSession session){
         if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("admin")){
-            return "redirect:/";
+            return "denied";
         }
         User user = userLoginService.getUserById(id);
         if(user.isStatus()==false){

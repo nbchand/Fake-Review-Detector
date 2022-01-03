@@ -8,6 +8,9 @@ $('.hello').on('click',function(event){
     })
         .then(response => response.text())
         .then(data => {
+            if(data=="denied"){
+                location.href = "/";
+            }
             location.href = "/admin-page";
             console.log(data);
         })
