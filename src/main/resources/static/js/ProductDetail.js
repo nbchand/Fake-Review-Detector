@@ -8,6 +8,9 @@ $('.purchaseBtn').on('click',function(event){
     })
         .then(response => response.text())
         .then(data => {
+            if(data=="denied"){
+                location.href = "/";
+            }
             location.href = "/display-product/"+id;
             console.log(data);
         })
@@ -59,3 +62,23 @@ $('.review-form').on('submit',async function (event){
         });
 
 });
+
+//deletes review
+$('.delete_review').on('click',function(event){
+    event.preventDefault();
+    const id = event.target.id;
+    fetch("/review/"+id, {
+        method: 'DELETE',
+    })
+        .then(response => response.text())
+        .then(data => {
+            if(data=="denied"){
+                location.href = "/";
+            }
+            location.href = "/item-list";
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+})

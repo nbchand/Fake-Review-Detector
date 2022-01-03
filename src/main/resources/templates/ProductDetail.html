@@ -89,20 +89,21 @@
 
         </div><hr>
 
-        <div class="review-section" th:unless="${product.reviews.isEmpty()}">
+        <div class="review-section" th:if="${reviews}">
 
             <label class="label">Reviews:</label>
-            <th:block th:each="review, iStat : ${product.reviews}">
+            <th:block th:each="review, iStat : ${reviews}">
 
-                <div class="user" th:text="${iStat.count}+'. '+${review.user.firstname}+' '+${review.user.lastname}"></div>
+                <div class="user mt-3" th:text="${iStat.count}+'. '+${review.user.firstname}+' '+${review.user.lastname}"></div>
                 <div class="review rating-label"><b>Rating: <span th:text="${review.rating}+' out of 5'"></span></b></div>
-                <div class="review mb-3" th:text="${review.content}"></div>
+                <div class="review" th:text="${review.content}"></div>
+                <div class="review" th:if="${var2}AND${iStat.count==1}"><a class="text-success font-weight-bold" th:href="'/edit-review/'+${review.id}">Edit</a> | <a class="delete_review text-danger font-weight-bold" th:id="${review.id}" href="#">Delete</a></div>
 
             </th:block>
 
         </div>
 
-         <div class="alert alert-info text-center" th:if="${product.reviews.isEmpty()}">No reviews available</div>
+         <div class="alert alert-info text-center" th:unless="${reviews}">No reviews available</div>
 
 
     </div>

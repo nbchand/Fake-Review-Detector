@@ -11,7 +11,9 @@ import com.pcps.fakeReviewIdentifier.service.ReviewService;
 import com.pcps.fakeReviewIdentifier.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
@@ -73,9 +75,44 @@ public class ReviewController {
     @ResponseBody
     public String deleteReview(@PathVariable int id, HttpSession session){
         if(session.getAttribute("userId")==null){
-            return "redirect:/";
+            return "denied";
         }
         reviewService.deleteReview(reviewService.getReviewById(id));
         return "success";
+    }
+
+    @GetMapping("/edit-review/{id}")
+    public String showEditReviewForm(@PathVariable int id, Model model, HttpSession session){
+        if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("user")){
+            return "redirect:/";
+        }
+        Review review = reviewService.getReviewById(id);
+        model.addAttribute("review",review);
+        return "EditReview";
+    }
+
+    @PostMapping("/edit-review/{id}")
+    public String updateReview(@PathVariable int id, @ModelAttribute ReviewPojo reviewPojo, RedirectAttributes redirectAttributes, HttpSession session){
+        if(session.getAttribute("userId")==null||!session.getAttribute("type").equals("user")){
+            return "redirect:/";
+        }
+        if(reviewPojo.getContent().equals("")){
+            redirectAttributes.addFlashAttribute("msg","Review can't be empty");
+            return "redirect:/edit-review/"+id;
+        }
+        if(reviewPojo.getRating()<1&&reviewPojo.getRating()>5){
+            redirectAttributes.addFlashAttribute("msg","Invalid rating");
+            return "redirect:/edit-review/"+id;
+        }
+        Review review = reviewService.getReviewById(id);
+        review.setContent(reviewPojo.getContent());
+        review.setRating(reviewPojo.getRating());
+        reviewService.saveReview(review);
+
+        Product product = review.getProduct();
+        product.setRatings(ReviewHelper.calculateAvgRating(product.getReviews()));
+        productService.saveProduct(product);
+
+        return "redirect:/display-product/"+review.getProduct().getId();
     }
 }

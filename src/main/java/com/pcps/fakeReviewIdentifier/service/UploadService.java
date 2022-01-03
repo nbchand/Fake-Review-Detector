@@ -48,7 +48,7 @@ public class UploadService {
             Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
                     StandardCopyOption.REPLACE_EXISTING);
             try{
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
